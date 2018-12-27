@@ -9,4 +9,5 @@
     <string name="insert">Insert</string>
     <string name="empty_not_saved">Record not save</string>
     <string name="no_record">No record</string>
+    <string name ="clear_data">Clear</string>
 </resources>

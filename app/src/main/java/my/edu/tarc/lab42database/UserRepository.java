@@ -2,6 +2,7 @@ package my.edu.tarc.lab42database;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Delete;
 import android.os.AsyncTask;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class UserRepository {
     LiveData<List<User>> getAllUsers(){
         return allUsers;
     }
-    
+
+    public void  deleteUser(User user){ new deleteAsyncTask(userDao).execute(user); }
     public void insertUser(User user){
         new insertAsyncTask(userDao).execute(user);
     }
@@ -40,9 +42,27 @@ public class UserRepository {
 
         // '...' is an array
         @Override
+
         protected Void doInBackground(User... users) {
             userDao.insertUser(users[0]);
             return null;
         }
     }
+
+    private static class deleteAsyncTask extends AsyncTask<User, Void, Void> {
+        private UserDao userDao;
+
+        public deleteAsyncTask(UserDao userDao) {
+            this.userDao = userDao;
+        }
+
+        // '...' is an array
+        @Override
+
+        protected Void doInBackground(User... users) {
+            userDao.deleteUser(users[0]);
+            return null;
+        }
+    }
+
 }
